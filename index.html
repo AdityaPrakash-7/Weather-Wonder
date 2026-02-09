@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Font Awesome (social icons) -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">🌤 Weather&Wonders</div>
+    <ul>
+      <li><a href="#" onclick="goHome()">Home</a></li>
+      <li><a href="#" onclick="openAbout()">About</a></li>
+      <li><a href="#" onclick="openContact()">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- Main card -->
+  <div class="container">
+    <div class="moving-text-wrapper">
+  <h1 class="moving-text">
+    🌤 Get weather of the city and places to visit 🌍
+  </h1>
+</div>
+
+    <div class="search-box">
+      <input type="text" id="cityInput" placeholder="Enter city name" />
+      <div class="btn-group">
+        <button onclick="getWeather()">Get Weather</button>
+        <button class="refresh" onclick="clearResult()">Clear</button>
+      </div>
+    </div>
+    <div id="weatherResult" class="result"></div>
+    <div id="cityImage" class="city-image"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Made with ❤️ | Weather API + Wikipedia API</p>
+  </footer>
+
+  <!-- About Modal -->
+  <div id="aboutModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAbout()">&times;</span>
+      <h2>About Me</h2>
+      <p>Hi, I’m Aditya Prakash 👋.<br>
+        I love building web projects and exploring new technologies.<br>
+        This Weather App was created as part of my practice projects!</p>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div id="contactModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeContact()">&times;</span>
+      <h2>Contact Me</h2>
+      <p><strong>Phone:</strong> +91 7986499809</p>
+      <p><strong>Phone:</strong> +91 9870512238</p>
+      <p><strong>Email:</strong> adisahb2005@gmail.com</p>
+      <div class="social-links">
+        <a href="https://github.com/Adisahb2005/Tic-Tac-Toe" target="_blank" aria-label="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/aditya-prakash-bbb4aa1b4/" target="_blank" aria-label="LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="https://x.com/AdityaP08450716/photo" target="_blank" aria-label="Twitter">
+          <i class="fab fa-x-twitter"></i>
+        </a>
+        <a href="https://www.instagram.com/aditya__prakash__7/" target="_blank" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+
+  <script src="script.js"></script>
+</body>
+
+</html>
