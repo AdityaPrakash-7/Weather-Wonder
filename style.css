@@ -20,7 +20,7 @@ body {
   position: relative;
 }
 
-/* Subtle premium background glow */
+/* Premium background glow */
 body::before {
   content: "";
   position: fixed;
@@ -89,20 +89,11 @@ body::before {
   .navbar {
     flex-direction: column;
     gap: 10px;
-    text-align: center;
-  }
-
-  .navbar ul {
-    gap: 14px;
-  }
-
-  .navbar .logo {
-    font-size: 20px;
   }
 }
 
 /* ===============================
-   MAIN CARD
+   MAIN CONTAINER
 ================================ */
 .container {
   background: #fff;
@@ -116,9 +107,75 @@ body::before {
   animation: fadeIn 0.8s ease;
 }
 
-h1 {
-  margin-bottom: 16px;
-  color: #333;
+/* ===============================
+   MOVING HEADING (INFINITE)
+================================ */
+.moving-text-wrapper {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+/* Edge blur */
+.moving-text-wrapper::before,
+.moving-text-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  z-index: 2;
+}
+
+.moving-text-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, #fff, transparent);
+}
+
+.moving-text-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, #fff, transparent);
+}
+
+.moving-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 18s linear infinite;
+}
+
+.moving-track span {
+  white-space: nowrap;
+  padding-right: 60px;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 800;
+  background: linear-gradient(90deg, #007BFF, #00c6ff, #007BFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Pause on hover */
+.moving-text-wrapper:hover .moving-track {
+  animation-play-state: paused;
+}
+
+/* Slower on mobile */
+@media (max-width: 480px) {
+  .moving-track {
+    animation-duration: 26s;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .moving-track {
+    animation: none;
+  }
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 /* ===============================
@@ -139,7 +196,6 @@ h1 {
   border: 1px solid #d7d7d7;
   border-radius: 10px;
   font-size: 16px;
-  transition: box-shadow 0.25s ease, border 0.25s ease;
 }
 
 .search-box input:focus {
@@ -150,35 +206,33 @@ h1 {
 
 .btn-group {
   display: flex;
-  justify-content: center;
   gap: 10px;
 }
 
 .btn-group button {
   padding: 12px 18px;
   min-width: 130px;
-  background-color: #007BFF;
-  color: white;
+  background: #007BFF;
+  color: #fff;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
-  transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s;
   box-shadow: 0 6px 12px rgba(0,123,255,0.25);
+  transition: 0.25s;
 }
 
 .btn-group button:hover {
   transform: translateY(-2px);
-  background-color: #0056b3;
+  background: #0056b3;
 }
 
 .btn-group .refresh {
-  background-color: #dc3545;
-  box-shadow: 0 6px 12px rgba(220,53,69,0.25);
+  background: #dc3545;
 }
 
 .btn-group .refresh:hover {
-  background-color: #b02a37;
+  background: #b02a37;
 }
 
 /* Mobile buttons */
@@ -198,8 +252,6 @@ h1 {
 ================================ */
 .result {
   margin-top: 10px;
-  font-size: 18px;
-  color: #333;
   opacity: 0;
   transform: translateY(12px);
   animation: fadeUp 0.6s forwards;
@@ -208,39 +260,36 @@ h1 {
 .result .topline {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  align-items: center;
   gap: 16px;
-  margin-bottom: 12px;
+  align-items: center;
 }
 
-.result .cityname {
+.cityname {
   font-size: 1.4rem;
   font-weight: 700;
 }
 
-.result .temp {
+.temp {
   font-size: 2rem;
   font-weight: 800;
   color: #007BFF;
 }
 
-.result .meta {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 8px;
-  color: #555;
-  font-size: 0.95rem;
-}
-
 .weather-icon {
   width: 72px;
-  height: 72px;
   animation: float 3s ease-in-out infinite;
 }
 
-/* Mobile weather layout */
+.meta {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  color: #555;
+}
+
+/* Mobile weather */
 @media (max-width: 600px) {
   .result .topline {
     grid-template-columns: 1fr;
@@ -248,11 +297,7 @@ h1 {
   }
 
   .weather-icon {
-    margin: 0 auto;
-  }
-
-  .result .temp {
-    font-size: 2.4rem;
+    margin: auto;
   }
 }
 
@@ -270,14 +315,12 @@ h1 {
   background: #fff;
   border-radius: 14px;
   overflow: hidden;
-  text-align: left;
   box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: 0.25s;
 }
 
 .monument-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 14px 26px rgba(0,0,0,0.14);
 }
 
 .monument-card img {
@@ -290,46 +333,21 @@ h1 {
   padding: 12px 14px;
 }
 
-.monument-card h4 {
-  margin-bottom: 6px;
-  color: #1f2937;
-}
-
 .monument-card p {
-  color: #4b5563;
-  font-size: 0.95rem;
   line-height: 1.45;
-  margin-bottom: 8px;
-}
-
-.monument-card a {
-  color: #007BFF;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.monument-card a:hover {
-  text-decoration: underline;
-}
-
-/* Reduce motion support */
-@media (prefers-reduced-motion: reduce) {
-  .monument-card:hover {
-    transform: none;
-  }
+  color: #4b5563;
 }
 
 /* ===============================
    FOOTER
 ================================ */
 footer {
-  text-align: center;
+  margin-top: auto;
   padding: 15px;
+  text-align: center;
   color: #fff;
-  font-size: 14px;
   background: rgba(0,0,0,0.2);
   backdrop-filter: blur(14px);
-  margin-top: auto;
 }
 
 /* ===============================
@@ -339,20 +357,17 @@ footer {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 1000;
   background: rgba(0,0,0,0.55);
   justify-content: center;
   align-items: center;
-  padding: 16px;
 }
 
 .modal-content {
-  position: relative;
   background: #fff;
   padding: 24px;
   border-radius: 14px;
   max-width: 520px;
-  width: 100%;
+  width: 92%;
   text-align: center;
   animation: scaleIn 0.28s ease;
 }
@@ -363,83 +378,13 @@ footer {
   top: 10px;
   font-size: 26px;
   cursor: pointer;
-  color: #777;
-}
-
-.close:hover {
-  color: #dc3545;
-}
-
-.social-links {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  margin-top: 12px;
-}
-
-.social-links a {
-  font-size: 24px;
-  color: #007BFF;
-  transition: color 0.25s ease, transform 0.2s ease;
-}
-
-.social-links a:hover {
-  color: #0056b3;
-  transform: translateY(-2px);
-}
-
-
-/* ===============================
-   MOVING HEADING TEXT
-================================ */
-
-.moving-text-wrapper {
-  width: 100%;
-  overflow: hidden;
-  margin-bottom: 18px;
-}
-
-.moving-text {
-  display: inline-block;
-  white-space: nowrap;
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 700;
-  color: #333;
-  animation: moveText 14s linear infinite;
-}
-
-/* Animation */
-@keyframes moveText {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-/* Pause animation on hover (premium UX touch) */
-.moving-text:hover {
-  animation-play-state: paused;
-}
-
-
-/* Mobile modal */
-@media (max-width: 480px) {
-  .modal-content {
-    padding: 18px;
-  }
-
-  .modal-content h2 {
-    font-size: 1.3rem;
-  }
 }
 
 /* ===============================
    ANIMATIONS
 ================================ */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.97); }
+  from { opacity: 0; transform: scale(0.96); }
   to { opacity: 1; transform: scale(1); }
 }
 
@@ -453,6 +398,6 @@ footer {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
+  0%,100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
 }
